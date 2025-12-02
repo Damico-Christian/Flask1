@@ -9,7 +9,7 @@ CORS(app)
 db = DatabaseWrapper(
     host="mysql-1197a299-iisgalvanimi-2ff7.g.aivencloud.com",
     user="avnadmin",
-    password="AVNS_EkGkeBVLvXC726rqo8_",
+    password="",
     database="defaultdb",
     port=22433  
 )
