@@ -1,27 +1,34 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { FlaskService } from './services/flask-service';
+import { Component, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SpesaService } from './services/spesa-service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  standalone: true,
+  imports: [CommonModule],        // <- necessario per *ngFor
+  templateUrl: './app.html'
 })
-export class App {
+export class App implements OnInit {
 
-  
-  profilo = signal<any>({});
+  lista = signal<any[]>([]);
+  nuovoElemento = signal('');
 
-  constructor(private flaskService: FlaskService) {}
+  constructor(private spesa: SpesaService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.caricaLista();
+  }
 
-    this.flaskService.getProfilo().subscribe((dati) => {
+  caricaLista() {
+    this.lista.set(this.spesa.getLista()());
+  }
 
-      this.profilo.set(dati);
+  aggiungi() {
+    const val = this.nuovoElemento().trim();
+    if (!val) return;
 
-      console.log("Dati arrivati:", this.profilo());
-    });
+    this.spesa.aggiungiElemento(val);
+    this.nuovoElemento.set('');
+    this.caricaLista();
   }
 }

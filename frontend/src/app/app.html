@@ -1,5 +1,14 @@
-<h2>Vediamo questi dati</h2>
+<h2>Lista della spesa</h2>
 
-<p>{{ profilo()?.nome }}</p>
-<p>{{ profilo()?.professione }}</p>
-<p>{{ profilo()?.status }}</p>
+<input 
+  type="text" 
+  [value]="nuovoElemento()" 
+  (input)="nuovoElemento.set($any($event.target).value)"
+  placeholder="Nuovo elemento..."
+>
+
+<button (click)="aggiungi()">Aggiungi</button>
+
+<ul>
+  <li *ngFor="let el of lista()">{{ el }}</li>
+</ul>
